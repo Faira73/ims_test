@@ -1,6 +1,6 @@
-<x-loytou>
+<x-layout>
     <x-slot name='sidebar'>
-        <x-naviation-sidebar/>
+        <x-navigation-sidebar/>
     </x-slot>
     <h1>Questions</h1>
-</x-loytou>
+</x-layout>
