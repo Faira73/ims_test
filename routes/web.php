@@ -6,6 +6,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LoginController; 
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\QuestionsController;
 use App\Http\Middleware\EnsureUserIsActive;
 
 Route::get('/', function () {
@@ -57,4 +58,6 @@ Route::post('/candidate/store', [CandidateController::class, 'store'])
     ->middleware('employee')
     ->name('candidate.store');
 
- 
+ Route::get('/Questions', [QuestionsController::class, 'index'])
+    ->middleware('employee')
+    ->name('question.index');
