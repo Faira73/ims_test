@@ -16,10 +16,16 @@
         <select name="position" id="position" class="position-dropdown">
             <option value="" selected>All positions</option>
         </select>
-        <div class="search-bar">
-            <input type="text" placeholder="Search for a candidate.." class ="search-input">
-        </div>
+
+
+        <form action="{{ route('candidates.index')}}" method="GET">
+            <input name="search" type="text" placeholder="Search for a candidate.." class ="search-input">
+        </form>
         <button id="openPopupBtn" class="btn-primary">Add new candidate</button>
+
+        @if (request()->has('search') && request('search') != '')
+            <a href="{{route('candidates.index')}}">View All</a>
+        @endif
     </div>
 
 
@@ -61,45 +67,45 @@
     
     <!-- Popup Modal -->
     <div id="popupModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Add New Candidate</h2>
-        
-        <form method="POST" action="{{ route('candidate.store') }}" enctype="multipart/form-data">
-            @csrf
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add New Candidate</h2>
             
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="phone">Phone Number:</label>
-                <input type="tel" id="phone" name="phone" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="position">Position:</label>
-                <input type="text" id="position" name="position" required>
-            </div>
-            <div class="form-group">
-                <label for="Years of experience">Years of Experience</label>
-                <input type="number" id="years-experience" name="years_experience" min='0' required>
-            </div>
-            <div class="form-group">
-                <label for="resume">Resume:</label>
-                <input type="file" id="resume" name="resume_url" accept=".pdf,.doc,.docx" required>
-            </div>
-            
-            <button type="submit" class="btn-submit">Submit</button>
-        </form>
+            <form method="POST" action="{{ route('candidate.store') }}" enctype="multipart/form-data">
+                @csrf
+                
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="position">Position:</label>
+                    <input type="text" id="position" name="position" required>
+                </div>
+                <div class="form-group">
+                    <label for="Years of experience">Years of Experience</label>
+                    <input type="number" id="years-experience" name="years_experience" min='0' required>
+                </div>
+                <div class="form-group">
+                    <label for="resume">Resume:</label>
+                    <input type="file" id="resume" name="resume_url" accept=".pdf,.doc,.docx" required>
+                </div>
+                
+                <button type="submit" class="btn-submit">Submit</button>
+            </form>
+        </div>
     </div>
-</div>
 
     <script>
         // Get elements

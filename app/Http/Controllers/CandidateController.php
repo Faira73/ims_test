@@ -15,9 +15,21 @@ class CandidateController extends Controller
     }                                    
     return view('candidate.show', compact('candidate'));
 }
-    public function allCandidates()
+    public function index(Request $request)
     {
-        $candidates = Candidate::all();
+        $query = Candidate::query();
+
+    if ($request->has('search') && $request->search != '') {
+        $search = $request->search;
+        $query->where(function($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%")
+            ->orWhere('email', 'like', "%{$search}%")
+            ->orWhere('phone', 'like', "%{$search}%");
+        });
+    }
+
+    $candidates = $query->paginate(10); // paginate for nicer display
+
         return view('candidate.index', compact('candidates'));
     }
 

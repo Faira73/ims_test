@@ -39,8 +39,9 @@ Route::view('requestPending', 'employee.requestPending')
     ->middleware('employee')
     ->name('requestPending');
 
-Route::get('/candidates', [CandidateController::class,'allCandidates'])
-    ->middleware('employee');                                
+Route::get('/candidates', [CandidateController::class,'index'])
+    ->middleware('employee')
+    ->name('candidates.index');                                
 Route::get('/candidates/{id}', [CandidateController::class, 'show']); 
                                 //show is stored as string because we are not trying to call it here.
 
