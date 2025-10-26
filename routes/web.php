@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CandidateController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LoginController; 
 use App\Http\Controllers\RegisterController;
@@ -11,7 +12,7 @@ use App\Http\Middleware\EnsureUserIsActive;
 
 Route::get('/', function () {
     return view('home');
-})->name('home')->middleware('employee');                          //CandidateController::class is used to get the whole URL 
+})->name('home')->middleware('employee');//CandidateController::class is used to get the whole URL 
                                 // ims_test/app/CandidateController.php
 
 
@@ -58,6 +59,18 @@ Route::post('/candidate/store', [CandidateController::class, 'store'])
     ->middleware('employee')
     ->name('candidate.store');
 
- Route::get('/Questions', [QuestionsController::class, 'index'])
+ Route::get('/questions', [QuestionsController::class, 'index'])
     ->middleware('employee')
     ->name('question.index');
+
+Route::post('/questions/store', [QuestionsController::class, 'store'])
+    ->middleware('employee')
+    ->name('questions.store');
+
+Route::post('/categories/store', [CategoryController::class, 'store'])
+    ->middleware('employee')
+    ->name('categories.store');
+
+Route::get('/questions', [QuestionsController::class, 'index'])
+    ->middleware('employee')
+    ->name('questions.index');

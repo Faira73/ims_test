@@ -1,20 +1,18 @@
-const modal = document.getElementById('popupModal');
-        const btn = document.getElementById('openPopupBtn');
-        const closeBtn = document.querySelector('.close');
+document.addEventListener('DOMContentLoaded', function() {
+    const buttons = document.querySelectorAll('[data-modal-target]');
+    
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            const targetId = button.getAttribute('data-modal-target');
+            const modal = document.getElementById(targetId);
+            if(modal) modal.style.display = 'block';
+        });
+    });
 
-        // Open modal
-        btn.onclick = function() {
-            modal.style.display = 'block';
-        }
-
-        // Close modal when X is clicked
-        closeBtn.onclick = function() {
-            modal.style.display = 'none';
-        }
-
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
-        }
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.style.display = 'none';
+        });
+    });
+});
