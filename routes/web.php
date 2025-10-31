@@ -9,6 +9,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\QuestionsController;
 use App\Http\Middleware\EnsureUserIsActive;
+use App\Http\Controllers\InterviewController;
 
 Route::get('/', function () {
     return view('home');
@@ -74,3 +75,7 @@ Route::post('/categories/store', [CategoryController::class, 'store'])
 Route::get('/questions', [QuestionsController::class, 'index'])
     ->middleware('employee')
     ->name('questions.index');
+
+Route::get('/interviews', [InterviewController::class, 'index'])
+    ->middleware('employee')
+    ->name('interview.index');

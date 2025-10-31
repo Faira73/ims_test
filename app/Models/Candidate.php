@@ -13,6 +13,10 @@ class Candidate extends Model
    {
       return $this->belongsTo(Employee::class, 'created_by_id');
    }
+
+   public function interviews(){
+      return $this->hasOne(Interview::class);
+   }
    protected $fillable = [
     'name',
     'email',
