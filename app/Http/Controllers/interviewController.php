@@ -10,13 +10,12 @@ use Illuminate\Support\Facades\Auth;
 
 class interviewController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-    }
+ public function index(Request $request){
+    $query = Interview::query();
 
+    $interviews = $query->paginate(10);
 
+    return view('interview.index', compact('interviews'));
+ }   
 }
 
