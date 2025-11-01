@@ -35,7 +35,7 @@
                         @endif
                     </td>
                     <td>
-                        <a href="{{ route('interview.index', $interview->id) }}">View</a>
+                        <a href="{{ route('interview.show', $interview->id) }}">View</a>
                     </td>
                     <td>{{ $interview->evaluations->avg('score') ?? 'N/A' }}</td>
                     <td>
