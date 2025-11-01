@@ -79,3 +79,6 @@ Route::get('/questions', [QuestionsController::class, 'index'])
 Route::get('/interviews', [InterviewController::class, 'index'])
     ->middleware('employee')
     ->name('interview.index');
+Route::get('/interviews/{interview}', [InterviewController::class, 'show'])
+    ->middleware('employee')
+    ->name('interview.show');
