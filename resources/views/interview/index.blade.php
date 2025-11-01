@@ -5,7 +5,7 @@
 
     <h1>Interviews</h1>
 
-    <table class="Interviews">
+    <table class="candidates-table">
         <thead>
             <tr>
                 <th>Candidate Name</th>
@@ -22,15 +22,13 @@
             @foreach ($interviews as $interview)
                 <tr>
                     <td>{{ $interview->candidate->name ?? 'N/A' }}</td>
-                    <td>{{ $interview->candidate->mobile ?? 'N/A' }}</td>
+                    <td>{{ $interview->candidate->phone ?? 'N/A' }}</td>
                     <td>
-                        @foreach ($interview->evaluations as $evaluation)
-                            {{ $evaluation->employee->name ?? 'N/A' }}@if (!$loop->last), @endif
-                        @endforeach
+                        {{ $interview->interviewers->pluck('name')->implode(', ') ?: 'N/A' }}
                     </td>
                     <td>{{ $interview->candidate->position ?? 'N/A' }}</td>
                     <td>
-                        @if ($interview->candidate->resume)
+                        @if ($interview->candidate->resume_url)
                             <a href="{{ asset('storage/' . $interview->candidate->resume) }}" target="_blank">View</a>
                         @else
                             N/A
