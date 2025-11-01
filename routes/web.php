@@ -82,3 +82,6 @@ Route::get('/interviews', [InterviewController::class, 'index'])
 Route::get('/interviews/{interview}', [InterviewController::class, 'show'])
     ->middleware('employee')
     ->name('interview.show');
+Route::post('/ininterviews/store', [InterviewController::class, 'store'])
+    ->middleware('employee')
+    ->name('interview.store');

@@ -7,6 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Interview extends Model
 {
+
+    protected $fillable = [
+        'candidate_id',
+        'scheduled_at',
+        'location',
+        'notes',
+    ];
+
     public function interviewers(): BelongsToMany 
     {
         return $this->belongsToMany(Employee::class, 'interviewers', 

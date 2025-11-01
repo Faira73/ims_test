@@ -17,7 +17,11 @@ class InterviewController extends Controller
             ->orderBy('scheduled_at', 'desc')
             ->paginate(10);
 
-        return view('interview.index', compact('interviews'));
+        $candidates = Candidate::all();
+        $employees = Employee::all();
+
+        return view('interview.index', compact('interviews', 'candidates',
+                                        'employees'));
     }
 
     public function show(Interview $interview)
@@ -26,5 +30,29 @@ class InterviewController extends Controller
         $interview->load(['candidate', 'interviewers', 'evaluations.evaluator']);
 
         return view('interview.show', compact('interview'));
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+        'candidate_id'  => ['required', 'exists:candidates,id'],
+        'interviewers'  => ['required', 'array', 'min:1'],
+        'interviewers.*'=> ['exists:employees,id'],
+        'scheduled_at'  => ['required', 'date', 'after_or_equal:today'],
+        'link'          => ['nullable', 'url'],
+        'notes'         => ['nullable', 'string', 'max:1000'],
+        ]);
+        
+        $interview = Interview::create([
+            'candidate_id' => $validated['candidate_id'],
+            'scheduled_at' => $validated['scheduled_at'],
+            'location'         => $validated['link'] ?? null,
+            'notes'        => $validated['notes'] ?? null,
+            'status'       => 'scheduled', // default status
+        ]);
+        $interview->interviewers()->attach($validated['interviewers']);
+
+        return redirect()->route('interview.index')
+                        ->with('success', 'Interview created successfully.');
     }
 }
