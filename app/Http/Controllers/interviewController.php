@@ -23,7 +23,7 @@ class InterviewController extends Controller
     public function show(Interview $interview)
     {
         // Load all relevant relations for the detail view
-        $interview->load(['candidate', 'interviewers', 'evaluations.employee']);
+        $interview->load(['candidate', 'interviewers', 'evaluations.evaluator']);
 
         return view('interview.show', compact('interview'));
     }
