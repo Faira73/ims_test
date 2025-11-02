@@ -48,33 +48,6 @@
                 </tr>
             </tbody>
         </table>
-
-        <h2 class="text-xl font-semibold mb-2">Evaluations</h2>
-        <table class="table-auto w-full border-collapse">
-            <thead>
-                <tr>
-                    <th class="p-2 border">Evaluator</th>
-                    <th class="p-2 border">Criteria</th>
-                    <th class="p-2 border">Score</th>
-                    <th class="p-2 border">Comments</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($interview->evaluations as $evaluation)
-                    <tr>
-                        <td class="p-2 border">{{ $evaluation->evaluator->name ?? 'N/A' }}</td>
-                        <td class="p-2 border">{{ $evaluation->criteria ?? 'N/A' }}</td>
-                        <td class="p-2 border">{{ $evaluation->score ?? 'N/A' }}</td>
-                        <td class="p-2 border">{{ $evaluation->comments ?? 'N/A' }}</td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="4" class="text-center p-2 border text-gray-500">No evaluations yet</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
-
         <div class="mt-6">
             <a href="{{ route('interview.index') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Back to List</a>
         </div>
