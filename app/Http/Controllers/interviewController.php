@@ -12,7 +12,6 @@ class InterviewController extends Controller
 {
     public function index(Request $request)
     {
-        // Always eager-load related models to avoid N+1 query problems
         $interviews = Interview::with(['candidate', 'interviewers'])
             ->orderBy('scheduled_at', 'desc')
             ->paginate(10);
@@ -46,7 +45,7 @@ class InterviewController extends Controller
         $interview = Interview::create([
             'candidate_id' => $validated['candidate_id'],
             'scheduled_at' => $validated['scheduled_at'],
-            'location'         => $validated['link'] ?? null,
+            'location'     => $validated['link'] ?? null,
             'notes'        => $validated['notes'] ?? null,
             'status'       => 'scheduled', // default status
         ]);
