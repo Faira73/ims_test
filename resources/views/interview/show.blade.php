@@ -48,6 +48,39 @@
                 </tr>
             </tbody>
         </table>
+
+        {{-- Check if current user is one of the interviewers --}}
+        @if($interview->interviewers->contains(auth()->user()->id))
+            <h2 class="text-xl font-semibold mb-4">Your Evaluation</h2>
+
+            <form action="{{ route('evaluation.store', $interview->id) }}" method="POST">
+                @csrf
+                <table class="table-auto w-full border-collapse mb-6">
+                    <thead>
+                        <tr>
+                            <th class="text-left p-2 border">Criteria</th>
+                            <th class="text-left p-2 border">Description</th>
+                            <th class="text-left p-2 border">Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($evaluationCriteria as $criteria)
+                            <tr>
+                                <td class="p-2 border">{{ $criteria->label }}</td>
+                                <td class="p-2 border">{{ $criteria->description }}</td>
+                                <td class="p-2 border">
+                                    <input type="number" name="ratings[{{ $criteria->id }}]" min="1" max="5"
+                                        value="{{ old('ratings.'.$criteria->id) }}" class="border rounded p-1 w-16">
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
+                <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Submit Evaluation</button>
+            </form>
+        @endif
+
         <div class="mt-6">
             <a href="{{ route('interview.index') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Back to List</a>
         </div>
