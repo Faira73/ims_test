@@ -16,9 +16,8 @@ class EvaluationController extends Controller
             $criteria = EvaluationCriteria::all();
 
             $existing = Evaluation::where('interview_id', $interview->id)
-                ->where('evaluator_id', Auth::id())
-                ->first();
-مم
+                ->where('evaluator_id', Auth::id());
+
             if ($existing){
                 return redirect()->route('evaluations.edit', $existing->id);
             }
