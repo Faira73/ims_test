@@ -93,7 +93,7 @@ Route::get('/evaluations/{interview}/create', [EvaluationController::class, 'cre
     ->middleware('employee')
     ->name('evaluation.create');
 
-Route::post('/evaluations/{interview}/store', [EvaluationController::class, 'store'])
+Route::post('/interview/{interview}/store', [EvaluationController::class, 'store'])
     ->middleware('employee')
     ->name('evaluation.store');
 
