@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Interview;
 use App\Models\Candidate;
 use App\Models\Employee;
+use App\Models\EvaluationCriteria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,8 +28,9 @@ class InterviewController extends Controller
     {
         // Load all relevant relations for the detail view
         $interview->load(['candidate', 'interviewers', 'evaluations.evaluator']);
+        $evaluationCriteria = EvaluationCriteria::all();
 
-        return view('interview.show', compact('interview'));
+        return view('interview.show', compact('interview', 'evaluationCriteria'));
     }
 
     public function store(Request $request)
