@@ -10,7 +10,6 @@
         </button>
     </div>
 
-
     <table class="candidates-table">
         <thead>
             <tr>
@@ -49,29 +48,47 @@
                     </td>
                 </tr>
 
-                {{-- Hidden row for detailed evaluations --}}
+                {{-- Hidden row for detailed evaluations grouped by evaluator --}}
                 <tr id="details-{{ $interview->id }}" class="details-row" style="display: none;">
                     <td colspan="8">
-                        <table class="details-table">
-                            <thead>
-                                <tr>
-                                    <th>Evaluator</th>
-                                    <th>Criteria</th>
-                                    <th>Score</th>
-                                    <th>Comments</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($interview->evaluations as $evaluation)
-                                    <tr>
-                                        <td>{{ $evaluation->employee->name ?? 'N/A' }}</td>
-                                        <td>{{ $evaluation->criteria ?? 'N/A' }}</td>
-                                        <td>{{ $evaluation->score ?? 'N/A' }}</td>
-                                        <td>{{ $evaluation->comments ?? 'N/A' }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        @php
+                            // Group evaluations by evaluator
+                            $groupedEvaluations = $interview->evaluations->groupBy('employee_id');
+                        @endphp
+
+                        @foreach ($groupedEvaluations as $employeeId => $evaluations)
+                            <div style="margin-bottom: 20px; padding: 15px; background-color: #f9f9f9; border-radius: 5px;">
+                                <h3 style="margin-bottom: 10px; font-weight: bold; color: #333;">
+                                    Evaluator: {{ $evaluations->first()->employee->name ?? 'Unknown' }}
+                                    <span style="font-weight: normal; color: #666;">
+                                        (Average Score: {{ number_format($evaluations->avg('score'), 2) }})
+                                    </span>
+                                </h3>
+                                
+                                <table class="details-table" style="width: 100%; background: white;">
+                                    <thead>
+                                        <tr>
+                                            <th>Criteria</th>
+                                            <th>Score</th>
+                                            <th>Comments</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($evaluations as $evaluation)
+                                            <tr>
+                                                <td>{{ $evaluation->criteria ?? 'N/A' }}</td>
+                                                <td>{{ $evaluation->score ?? 'N/A' }}</td>
+                                                <td>{{ $evaluation->comments ?? 'N/A' }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @endforeach
+
+                        @if ($groupedEvaluations->isEmpty())
+                            <p style="text-align: center; color: #999; padding: 20px;">No evaluations available</p>
+                        @endif
                     </td>
                 </tr>
             @endforeach
@@ -82,7 +99,13 @@
         document.querySelectorAll('.toggle-details').forEach(button => {
             button.addEventListener('click', () => {
                 const detailsRow = document.getElementById('details-' + button.dataset.id);
-                detailsRow.style.display = detailsRow.style.display === 'none' ? 'table-row' : 'none';
+                if (detailsRow.style.display === 'none') {
+                    detailsRow.style.display = 'table-row';
+                    button.textContent = 'Collapse';
+                } else {
+                    detailsRow.style.display = 'none';
+                    button.textContent = 'Expand';
+                }
             });
         });
     </script>
@@ -117,7 +140,6 @@
                         @endforeach
                     </div>
                 </div>
-
             </div>
 
             <div class="form-group">
@@ -150,16 +172,6 @@
     window.addEventListener('click', (e) => {
         if (e.target === modal) modal.style.display = 'none';
     });
-</script>
-
-{{-- Modal JS --}}
-<script>
-    const openModalBtn = document.getElementById('openAddInterviewModal');
-    const closeModalBtn = document.getElementById('closeAddInterviewModal');
-    const modal = document.getElementById('addInterviewModal');
-
-    openModalBtn.addEventListener('click', () => modal.classList.remove('hidden'));
-    closeModalBtn.addEventListener('click', () => modal.classList.add('hidden'));
 </script>
 
 </x-layout>

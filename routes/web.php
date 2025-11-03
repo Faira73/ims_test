@@ -10,6 +10,7 @@ use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\QuestionsController;
 use App\Http\Middleware\EnsureUserIsActive;
 use App\Http\Controllers\InterviewController;
+use App\Http\Controllers\EvaluationController;
 
 Route::get('/', function () {
     return view('home');
@@ -87,3 +88,19 @@ Route::get('/interviews/{interview}', [InterviewController::class, 'show'])
 Route::post('/ininterviews/store', [InterviewController::class, 'store'])
     ->middleware('employee')
     ->name('interview.store');
+
+Route::get('/evaluations/{interview}/create', [EvaluationController::class, 'create'])
+    ->middleware('employee')
+    ->name('evaluation.create');
+
+Route::post('/evaluations/{interview}/store', [EvaluationController::class, 'store'])
+    ->middleware('employee')
+    ->name('evaluation.store');
+
+Route::get('/evaluations/{evaluation}/edit', [EvaluationController::class, 'edit'])
+    ->middleware('employee')
+    ->name('evaluation.edit');
+
+Route::put('/evaluations/{evaluation}/update', [EvaluationController::class, 'update'])
+    ->middleware('employee')
+    ->name('evaluation.update');
