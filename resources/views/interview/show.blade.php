@@ -61,6 +61,7 @@
                             <th class="text-left p-2 border">Criteria</th>
                             <th class="text-left p-2 border">Description</th>
                             <th class="text-left p-2 border">Rating</th>
+                            <th class="text-left p-2 border">Comment</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -71,6 +72,9 @@
                                 <td class="p-2 border">
                                     <input type="number" name="ratings[{{ $criteria->id }}]" min="1" max="5"
                                         value="{{ old('ratings.'.$criteria->id) }}" class="border rounded p-1 w-16">
+                                </td>
+                                <td class="p-2 border">
+                                    <input type="text" name="comments[{{ $criteria->id }}]" class="border rounded p-1 w-full">
                                 </td>
                             </tr>
                         @endforeach
