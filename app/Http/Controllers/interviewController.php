@@ -27,7 +27,11 @@ class InterviewController extends Controller
     public function show(Interview $interview)
     {
         // Load all relevant relations for the detail view
-        $interview->load(['candidate', 'interviewers', 'evaluations.evaluator']);
+        $interview->load(['candidate', 
+            'interviewers',
+            'evaluations.evaluator',
+            'evaluations.scores.criteria'
+        ]);
         $evaluationCriteria = EvaluationCriteria::all();
 
         return view('interview.show', compact('interview', 'evaluationCriteria'));
@@ -52,7 +56,6 @@ class InterviewController extends Controller
             'status'       => 'scheduled', // default status
         ]);
         $interview->interviewers()->attach($validated['interviewers']);
-
         return redirect()->route('interview.index')
                         ->with('success', 'Interview created successfully.');
     }
