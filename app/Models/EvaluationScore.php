@@ -17,5 +17,11 @@ class EvaluationScore extends Model
         return $this->belongsTo(EvaluationCriteria::class, 'criterion_id');
     }
 
-    
+    public static function EvaluatorAvg($interviewId, $evaluationId)
+    {
+        return static::where('interview_id', $interviewId)
+                    ->where('evaluator_id', $evaluationId)
+                    ->avg('score');
+
+    }
 }
