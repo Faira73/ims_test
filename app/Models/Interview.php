@@ -24,7 +24,7 @@ class Interview extends Model
     
     public function evaluations(): HasMany
     {
-        return $this->hasMany(Evaluation::class);
+        return $this->hasMany(Evaluation::class, 'interview_id');
     }
 
     public function candidate(){
