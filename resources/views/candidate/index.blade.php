@@ -21,7 +21,7 @@
         <form action="{{ route('candidates.index')}}" method="GET">
             <input name="search" type="text" placeholder="Search for a candidate.." class ="search-input">
         </form>
-        <button id="openPopupBtn" class="btn-primary">Add new candidate</button>
+        <button data-modal-target="popupModal" class="btn-primary">Add new candidate</button>
 
         @if (request()->has('search') && request('search') != '')
             <a href="{{route('candidates.index')}}">View All</a>
