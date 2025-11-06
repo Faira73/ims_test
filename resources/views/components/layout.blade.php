@@ -7,35 +7,38 @@
     @vite(['resources/css/app.css', 'resources/js/app.js', 'public/images'])
 </head>
 <body>
-    <header>
-        <img src="{{ asset('images/logo.png') }}" alt="Logo">
-        @auth
-        <form action="{{ route('logout')}}" method="POST">
-            @csrf
-            <button type="submit" class="sign_out">Sign out</button>
-        </form>
-        @endauth
+        <header class="flex justify-between items-center p-4 bg-gray-100">
+            <div class="flex items-center space-x-4">
+                <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-10">
+            </div>
+
+            @auth
+                <div class="flex items-center space-x-4">
+                    <span class="font-medium text-white">
+                        {{ auth()->user()->name }}
+                    </span>
+
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="sign_out bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">
+                            Sign out
+                        </button>
+                    </form>
+                </div>
+            @endauth
     </header>
-    <div class="main-container">
 
-        @if(!empty($sidebar))
-            <aside class="sidebar">
-                {{ $sidebar }}
-            </aside>
-        @endif
+        <div class="main-container">
 
-        <main class="container">
-            {{ $slot }}
-        </main>
-    </div>
-    {{-- <footer style="
-    height: 51px; 
-    background: url('{{ asset('images/imagesfooter-strip.png') }}') repeat-x; 
-    background-size: auto; 
-    position: fixed; 
-    bottom: 0; 
-    left: 0; 
-    width: 100%;">
-    </footer> --}}
-</body>
+            @if(!empty($sidebar))
+                <aside class="sidebar">
+                    {{ $sidebar }}
+                </aside>
+            @endif
+
+            <main class="container">
+                {{ $slot }}
+            </main>
+        </div>
+    </body>
 </html>
