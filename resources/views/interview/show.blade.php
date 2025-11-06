@@ -20,7 +20,7 @@
                     <th class="text-left p-2 border">Evaluators</th>
                     <td class="p-2 border">
                         {{ $interview->interviewers->pluck('name')->implode(', ') ?: 'N/A' }}
-                    </td>
+                    </td>a
                 </tr>
                 <tr>
                     <th class="text-left p-2 border">Position</th>
