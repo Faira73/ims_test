@@ -6,6 +6,7 @@ use App\Models\Interview;
 use App\Models\Candidate;
 use App\Models\Employee;
 use App\Models\EvaluationCriteria;
+use App\Models\Evaluation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,13 +15,16 @@ class InterviewController extends Controller
     public function index(Request $request)
     {
         $interviews = Interview::with(['candidate', 'interviewers'])
+            ->withAvg('evaluations','overall_score')
             ->orderBy('scheduled_at', 'desc')
             ->paginate(10);
 
         $candidates = Candidate::all();
         $employees = Employee::all();
+        $evaluationCriteria = EvaluationCriteria::all();
 
-        return view('interview.index', compact('interviews', 'candidates',
+        return view('interview.index', compact('interviews',
+                                        'candidates',
                                         'employees'));
     }
 
@@ -33,7 +37,6 @@ class InterviewController extends Controller
             'evaluations.scores.criteria'
         ]);
         $evaluationCriteria = EvaluationCriteria::all();
-
         return view('interview.show', compact('interview', 'evaluationCriteria'));
     }
 
