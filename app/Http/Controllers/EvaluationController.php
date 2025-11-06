@@ -25,7 +25,7 @@ class EvaluationController extends Controller
         }
 
         public function store(Request $request, Interview $interview)
-    {
+        {
         $user = Auth::id();
 
         if (!$interview ->interviewers->contains($user)){
@@ -50,7 +50,7 @@ class EvaluationController extends Controller
          $evaluation = Evaluation::create([
             'interview_id' => $interview->id,
             'evaluator_id' => $user,
-            'overall_score' => null, // you can calculate later if needed
+            'overall_score' => collect($validate['ratings'])->avg(), // you can calculate later if needed
             'overall_note' => null,
         ]);
         
