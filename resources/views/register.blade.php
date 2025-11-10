@@ -8,5 +8,8 @@
             <input type="password" name="password_confirmation" placeholder="Confirm Password">
             <button type="submit">Create Account</button>
         </form>
+         <div class="register-link" style="margin-top: auto; padding-bottom: 20px;">
+            <p>Already have an account? <a href="{{ route('login') }}">Login here</a></p>
+        </div>
     </div>
 </x-layout>
