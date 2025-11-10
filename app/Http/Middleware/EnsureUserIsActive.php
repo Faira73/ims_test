@@ -20,10 +20,10 @@ class EnsureUserIsActive
 
             
             $employee = Auth::user();
-            if($employee->is_pending && $request->routeIs('requestPending')){
+            if($employee->status === "PENDING" && !$request->routeIs('requestPending')){
                 return redirect()->route('requestPending');
             }
-            if (!$employee->is_pending && $request->routeIs('requestPending')) {
+            if (!$employee->status === "PENDING" && $request->routeIs('requestPending')) {
                 return redirect()->route('dashboard');
             }
         }
