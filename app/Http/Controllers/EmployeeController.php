@@ -6,7 +6,7 @@ use App\Models\Employee;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller{
-        public function show($id)
+    public function show($id)
     {
         $employee = Employee::find($id);
 
