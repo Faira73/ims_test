@@ -18,7 +18,7 @@
             <input type="password" name="password" placeholder="Password">
             <button type="submit">Login</button>
         </form>
-         <div class="register-link">
+         <div class="register-link" style="margin-top: auto; padding-bottom: 20px;">
             <p>Don't have an account? <a href="{{ route('register') }}">Register here</a></p>
         </div>
     </div>
