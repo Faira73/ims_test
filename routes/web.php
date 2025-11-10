@@ -36,7 +36,9 @@ Route::view('dashboard', 'dashboard')
 Route::view('register', 'register')
     ->middleware('guest')   
     ->name('register');
-Route::post('register', RegisterController::class)->name('register.store'); 
+Route::post('/register/store', RegisterController::class)
+    ->middleware('guest')
+    ->name('register.store'); 
 
 
 Route::view('requestPending', 'employee.requestPending')
